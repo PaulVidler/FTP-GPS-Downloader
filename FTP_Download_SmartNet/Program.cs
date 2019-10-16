@@ -8,44 +8,24 @@ namespace FTP_Download_SmartNet
     {
         static void Main(string[] args)
         {
-            DateTime startTime = new DateTime(2019, 09, 04, 23, 0, 0);
-            DateTime endTime = new DateTime(2019, 09, 05, 3, 0, 0);
+            DateTime startTime = new DateTime(2019, 09, 05, 3, 0, 0);
+            DateTime endTime = new DateTime(2019, 09, 05, 7, 0, 0);
             string baseName = "7CRA";
 
             BaseSpecs jobBase = new BaseSpecs(baseName, startTime, endTime);
 
-            string hostUri = 
+            string hostUri = "smartnetaus.com";
             string host = jobBase.StartUrl();
-            string user = 
-            string pass = 
+            string user = "aerometrex";
+            string pass = "aerometrex";
 
-            FTP_Site smartnet = new FTP_Site(hostUri, user, pass);
-
-
-
+            TcFTPSite smartnet = new TcFTPSite(hostUri, user, pass);
             FtpClient client = new FtpClient(smartnet.Host);
 
             client.Credentials = new NetworkCredential(smartnet.User, smartnet.Password);
-
             client.Connect();
 
-            //foreach (FtpListItem item in client.GetListing(host))
-            foreach (string item in client.GetNameListing(host))
-            {
-                try
-                {
-                    Console.WriteLine(item.GetFtpFileName());
-                    //client.DownloadFile(@"D:\Testing-DIR-for-Code\" + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
-                    client.DownloadFile(@"D:\Testing-DIR-for-Code\david.zip", host + @"\" + item.GetFtpFileName());
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine(item + " not found");
-                    
-                }
-                continue;
-            }
-
+            TcFTPSite.GetFileList(client, host, startTime, endTime);
 
 
             // Start URL works
