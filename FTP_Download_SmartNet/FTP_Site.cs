@@ -35,29 +35,36 @@ namespace FTP_Download_SmartNet
             int startHour = start.Hour;
             int endHour = end.Hour;
 
+            // if hours do not cross into next day
             if (startHour < endHour)
             {
+                int totalHours = endHour - startHour;
+                List<string> hourList = new List<string>();
 
+                // add letters to hourListbased on startHour and endHour
+                for (int i = startHour; i < endHour; i++)
+                {
+                    hourList.Add(hourLetter[i]);
+                }
+
+
+                // iterate over list of file names in target host connection
                 foreach (var item in client.GetNameListing(host))
                 {
                     
                     var x = item.GetFtpFileName();
 
-                    // list to hold file names to download
-                    List<string> charList = new List<string>();
-                    
-                    for (int i = 0; i < hourLetter.Count; i++)
+                    for (int i = 0; i < hourList.Count; i++)
                     {
-                        if (x[7].ToString().Contains(hourLetter[i]))
+                        if (x[7].ToString() == hourList[i])
                         {
                             fileList.Add(item);
                         }
                     }
-                    
+
                 }
 
             }
-
 
             else
             {
@@ -92,3 +99,23 @@ namespace FTP_Download_SmartNet
 
     }
 }
+
+
+//// iterate over list of file names in target host connection
+//                foreach (var item in client.GetNameListing(host))
+//                {
+                    
+//                    var x = item.GetFtpFileName();
+
+//// list to hold file names to download
+//List<string> charList = new List<string>();
+                    
+//                    for (int i = 0; i<hourLetter.Count; i++)
+//                    {
+//                        if (x[7].ToString() == hourLetter[i])
+//                        {
+//                            fileList.Add(item);
+//                        }
+//                    }
+                    
+//                }
