@@ -2,7 +2,7 @@
 
 namespace FTP_Download_SmartNet
 {
-    class BaseSpecs
+    public class BaseSpecs
     {
         public string BaseName { get; set; }
         public DateTime Start { get; set; }
@@ -27,7 +27,7 @@ namespace FTP_Download_SmartNet
         public string EndUrl()
         {
             // /Hourly-1Sec/2019/09/05/ACL2
-            string urlEndDirStr = $"/Hourly-1Sec/{this.Finish.Year}/{this.Finish.Month}/{this.Finish.Day}/{this.BaseName}";
+            string urlEndDirStr = $"/Hourly-1Sec/{this.Finish.Year}/0{this.Finish.Month}/0{this.Finish.Day}/{this.BaseName}";
 
             return urlEndDirStr;
         }
