@@ -17,6 +17,8 @@ namespace UnitTests
         {
             var baseTest = new BaseSpecs(testBase, testStart, testEnd);
             Assert.Equal(testBase, baseTest.BaseName);
+            Assert.Equal(testStart, baseTest.Start);
+            Assert.Equal(testEnd, baseTest.Finish);
             
         }
 
@@ -25,6 +27,14 @@ namespace UnitTests
         {
             var baseTest = new BaseSpecs(testBase, testStart, testEnd);
             Assert.Equal($"/Hourly-1Sec/{testStart.Year}/0{testStart.Month}/0{testStart.Day}/{testBase}", baseTest.StartUrl());
+
+        }
+
+        [Fact]
+        public void EndURLMethodTest()
+        {
+            var baseTest = new BaseSpecs(testBase, testStart, testEnd);
+            Assert.Equal($"/Hourly-1Sec/{testEnd.Year}/0{testEnd.Month}/0{testEnd.Day}/{testBase}", baseTest.EndUrl());
 
         }
 

@@ -24,8 +24,6 @@ namespace FTP_Download_SmartNet
 
 
 
-
-
         public static List<string> GetFileList(FtpClient client, string host, string hostEnd, DateTime start, DateTime end)
         {
             // pretty sure this is heinous, but I'm not sure why, or how to do it better

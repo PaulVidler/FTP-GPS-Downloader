@@ -26,8 +26,9 @@ namespace FTP_Download_SmartNet
             client.Credentials = new NetworkCredential(smartnet.User, smartnet.Password);
             client.Connect();
 
-            TcFTPSite.GetFileList(client, host, hostEnd, startTime, endTime);
+            var fileList = TcFTPSite.GetFileList(client, host, hostEnd, startTime, endTime);
 
+            TcFTPSite.FTPDownload(client, host, hostEnd, fileList, Environment.CurrentDirectory);
 
             // Start URL works
             // needs error checking for empty values or errors etc
