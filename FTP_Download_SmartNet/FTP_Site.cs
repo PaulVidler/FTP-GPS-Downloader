@@ -22,6 +22,10 @@ namespace FTP_Download_SmartNet
             Password = password;
         }
 
+        public List<string> GetBaseList(DateTime start)
+        {
+            return // enter code here for return of base list from BaseList() method in BaseSpecs class
+        }
 
 
         public static List<string> GetFileList(FtpClient client, string host, string hostEnd, DateTime start, DateTime end)

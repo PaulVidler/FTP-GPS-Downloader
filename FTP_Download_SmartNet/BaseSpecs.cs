@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FTP_Download_SmartNet
 {
@@ -7,6 +8,7 @@ namespace FTP_Download_SmartNet
         public string BaseName { get; set; }
         public DateTime Start { get; set; }
         public DateTime Finish { get; set; }
+
 
         // constructor
         public BaseSpecs(string basename, DateTime start, DateTime finish)
@@ -31,6 +33,13 @@ namespace FTP_Download_SmartNet
 
             return urlEndDirStr;
         }
+
+        public string BaseList()
+        {
+            string baseListUrl = $"/Hourly-1Sec/{this.Start.Year}/0{this.Start.Month}/0{this.Start.Day}/";
+            return baseListUrl;
+        }
+
 
     }
 }
