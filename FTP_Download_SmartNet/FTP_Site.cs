@@ -127,11 +127,14 @@ namespace FTP_Download_SmartNet
 
         public static void FTPDownload(FtpClient client, string host, string hostEnd , List<String> fileList, string folderLocation)
         {
+            int fileListCounter = 0;
+            int fileListCounter1 = 0;
+
             try
             {
                 foreach (string item in client.GetNameListing(host))
                 {
-                    int fileListCounter = 0;
+                    
 
                     if (fileList[fileListCounter].Contains(item.GetFtpFileName()))
                     {
@@ -145,14 +148,14 @@ namespace FTP_Download_SmartNet
 
                 foreach (string item in client.GetNameListing(hostEnd))
                 {
-                    int fileListCounter = 0;
+                    
 
-                    if (fileList[fileListCounter].Contains(item.GetFtpFileName()))
+                    if (fileList[fileListCounter1].Contains(item.GetFtpFileName()))
                     {
                         Console.WriteLine("Downloading: " + item.GetFtpFileName());
                         client.DownloadFile(folderLocation + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
 
-                        fileListCounter++;
+                        fileListCounter1++;
                     }
 
                 }
