@@ -13,7 +13,6 @@ namespace FTP_Download_SmartNet
         public string User { get; set; }
         public string Password { get; set; }
 
-        
 
         public TcFTPSite(string host, string user, string password)
         {
@@ -22,9 +21,18 @@ namespace FTP_Download_SmartNet
             Password = password;
         }
 
-        public List<string> GetBaseList(DateTime start)
+        public List<string> GetBaseList(FtpClient client, DateTime start)
         {
-            return // enter code here for return of base list from BaseList() method in BaseSpecs class
+            List<string> baseList = new List<string>();
+            string urlDirStr =$"/Hourly-1Sec/{start.Year}/{start.Month.ToString("00")}/{start.Day.ToString("00")}";
+            var listing = client.GetNameListing(urlDirStr);
+
+            foreach (var item in listing)
+            {
+                baseList.Add(item.GetFtpFileName());
+            }
+            
+            return baseList; 
         }
 
 
@@ -128,7 +136,7 @@ namespace FTP_Download_SmartNet
 
 
         // takes listof file names and downloads to specified location.
-
+        // *********** NEEDS TO BE MADE ASYNC!!!!!!! *****************
         public static void FTPDownload(FtpClient client, string host, string hostEnd , List<String> fileList, string folderLocation)
         {
             int fileListCounter = 0;
@@ -139,7 +147,6 @@ namespace FTP_Download_SmartNet
                 foreach (string item in client.GetNameListing(host))
                 {
                     
-
                     if (fileList[fileListCounter].Contains(item.GetFtpFileName()))
                     {
                         Console.WriteLine("Downloading: " + item.GetFtpFileName());
@@ -153,7 +160,6 @@ namespace FTP_Download_SmartNet
                 foreach (string item in client.GetNameListing(hostEnd))
                 {
                     
-
                     if (fileList[fileListCounter1].Contains(item.GetFtpFileName()))
                     {
                         Console.WriteLine("Downloading: " + item.GetFtpFileName());
@@ -165,32 +171,15 @@ namespace FTP_Download_SmartNet
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error: {0}", ex.Message);
+                Console.WriteLine("Error: {0}", ex.Data);
+                Console.WriteLine("Error: {0}", ex.Source);
+                Console.WriteLine("Error: {0}", ex.HelpLink);
             }
 
         }
-
-
-
-        //public static void FTPDownload(FtpClient client, string host, List<String> fileList, string folderLocation)
-        //{
-        //    try
-        //    {
-        //        foreach (string item in client.GetNameListing(host))
-        //        {
-        //            Console.WriteLine("Downloading: " + item.GetFtpFileName());
-        //            client.DownloadFile(folderLocation + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
-
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-
-        //}
 
     }
 }

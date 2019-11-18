@@ -1,5 +1,6 @@
 ﻿using FluentFTP;
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace FTP_Download_SmartNet
@@ -8,8 +9,9 @@ namespace FTP_Download_SmartNet
     {
         static void Main(string[] args)
         {
-            DateTime startTime = new DateTime(2019, 07, 09, 11, 0, 0);
-            DateTime endTime = new DateTime(2019, 07, 09, 14, 0, 0);
+            // year/month/day/hour/minute/second
+            DateTime startTime = new DateTime(2019, 10, 09, 22, 0, 0);
+            DateTime endTime = new DateTime(2019, 10, 10, 5, 0, 0);
             string baseName = "MCHY";
 
             BaseSpecs jobBase = new BaseSpecs(baseName, startTime, endTime);
@@ -28,11 +30,9 @@ namespace FTP_Download_SmartNet
 
             var fileList = TcFTPSite.GetFileList(client, host, hostEnd, startTime, endTime);
 
-            TcFTPSite.FTPDownload(client, host, hostEnd, fileList, Environment.CurrentDirectory);
+            List<string> testBaseList = smartnet.GetBaseList(client, startTime);
 
-            
-            // need to be able to error check and report on time gaps etc
-            // if download fails due to month change or naming issues. Maybe try to download everything in the file as a backup so as not to throw an exception 
+            TcFTPSite.FTPDownload(client, host, hostEnd, fileList, Environment.CurrentDirectory);
 
         }
     }
