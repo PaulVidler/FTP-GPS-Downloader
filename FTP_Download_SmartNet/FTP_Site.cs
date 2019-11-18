@@ -142,41 +142,36 @@ namespace FTP_Download_SmartNet
             int fileListCounter = 0;
             int fileListCounter1 = 0;
 
-            try
+            foreach (string item in client.GetNameListing(host))
             {
-                foreach (string item in client.GetNameListing(host))
-                {
                     
-                    if (fileList[fileListCounter].Contains(item.GetFtpFileName()))
-                    {
-                        Console.WriteLine("Downloading: " + item.GetFtpFileName());
-                        client.DownloadFile(folderLocation + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
-
-                        fileListCounter++;
-                    }
+                if (fileList[fileListCounter].Contains(item.GetFtpFileName()))
+                {
+                    Console.WriteLine("Downloading: " + item.GetFtpFileName());
+                    client.DownloadFile(folderLocation + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
+                    fileListCounter++;
 
                 }
-
-                foreach (string item in client.GetNameListing(hostEnd))
-                {
-                    
-                    if (fileList[fileListCounter1].Contains(item.GetFtpFileName()))
-                    {
-                        Console.WriteLine("Downloading: " + item.GetFtpFileName());
-                        client.DownloadFile(folderLocation + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
-
-                        fileListCounter1++;
-                    }
-
-                }
-
+                
             }
-            catch (Exception ex)
+
+            foreach (string item2 in client.GetNameListing(hostEnd))
             {
-                Console.WriteLine("Error: {0}", ex.Message);
-                Console.WriteLine("Error: {0}", ex.Data);
-                Console.WriteLine("Error: {0}", ex.Source);
-                Console.WriteLine("Error: {0}", ex.HelpLink);
+                    
+                if (fileList[fileListCounter].Contains(item2.GetFtpFileName()) && fileListCounter <= fileList.Count)
+                {
+                    Console.WriteLine("Downloading: " + item2.GetFtpFileName());
+                    // Console.WriteLine("LocalPath: " + folderLocation + item2.GetFtpFileName() + ". RemotePath: " + host + @"\" + item2.GetFtpFileName());
+                    client.DownloadFile(folderLocation + item2.GetFtpFileName(), hostEnd + @"\" + item2.GetFtpFileName());
+
+                    fileListCounter++;
+                }
+
+                else
+                {
+                    break;
+                }
+
             }
 
         }
