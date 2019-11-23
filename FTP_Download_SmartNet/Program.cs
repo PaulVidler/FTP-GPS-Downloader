@@ -10,9 +10,9 @@ namespace FTP_Download_SmartNet
         static void Main(string[] args)
         {
             // year/month/day/hour/minute/second
-            DateTime startTime = new DateTime(2019, 11, 09, 22, 0, 0);
-            DateTime endTime = new DateTime(2019, 11, 10, 5, 0, 0);
-            string baseName = "MCHY";
+            DateTime startTime = new DateTime(2019, 11, 7, 16, 0, 0);
+            DateTime endTime = new DateTime(2019, 11, 8, 2, 0, 0);
+            string baseName = "4CRY";
 
             BaseSpecs jobBase = new BaseSpecs(baseName, startTime, endTime);
 

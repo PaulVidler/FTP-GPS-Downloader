@@ -140,36 +140,34 @@ namespace FTP_Download_SmartNet
         public static void FTPDownload(FtpClient client, string host, string hostEnd , List<String> fileList, string folderLocation)
         {
             int fileListCounter = 0;
-            int fileListCounter1 = 0;
 
+            // loop over first list (List for first day)
             foreach (string item in client.GetNameListing(host))
             {
                     
-                if (fileList[fileListCounter].Contains(item.GetFtpFileName()))
+                if (fileList[fileListCounter].Contains(item.GetFtpFileName()) && fileListCounter < (fileList.Count - 1))
                 {
                     Console.WriteLine("Downloading: " + item.GetFtpFileName());
                     client.DownloadFile(folderLocation + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
+                    
                     fileListCounter++;
 
                 }
                 
+
             }
 
+            // loop over second list for second day
             foreach (string item2 in client.GetNameListing(hostEnd))
             {
                     
-                if (fileList[fileListCounter].Contains(item2.GetFtpFileName()) && fileListCounter <= fileList.Count)
+                if (fileList[fileListCounter].Contains(item2.GetFtpFileName()) && fileListCounter < (fileList.Count - 1))
                 {
                     Console.WriteLine("Downloading: " + item2.GetFtpFileName());
-                    // Console.WriteLine("LocalPath: " + folderLocation + item2.GetFtpFileName() + ". RemotePath: " + host + @"\" + item2.GetFtpFileName());
                     client.DownloadFile(folderLocation + item2.GetFtpFileName(), hostEnd + @"\" + item2.GetFtpFileName());
 
                     fileListCounter++;
-                }
 
-                else
-                {
-                    break;
                 }
 
             }
