@@ -12,6 +12,14 @@ namespace FTP_Download_SmartNet
         public string JobDirectory { get; set; }
         public string LogFileString { get; set; }
 
+        
+        public JobDownloads(string jobDirectory, List<BaseSpecs> baseSpecs)
+        {
+            JobDirectory = jobDirectory;
+            BaseList = baseSpecs;
+        }
+        
+        
         public void UnzipFiles()
         {
             // code to unzip downloaded files

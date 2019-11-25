@@ -1,6 +1,7 @@
 ﻿using FluentFTP;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Net;
 
 namespace FTP_Download_SmartNet
@@ -10,8 +11,8 @@ namespace FTP_Download_SmartNet
         static void Main(string[] args)
         {
             // year/month/day/hour/minute/second
-            DateTime startTime = new DateTime(2019, 11, 7, 16, 0, 0);
-            DateTime endTime = new DateTime(2019, 11, 8, 2, 0, 0);
+            DateTime startTime = new DateTime(2019, 11, 8, 1, 0, 0);
+            DateTime endTime = new DateTime(2019, 11, 8, 3, 0, 0);
             string baseName = "4CRY";
 
             BaseSpecs jobBase = new BaseSpecs(baseName, startTime, endTime);
@@ -30,9 +31,15 @@ namespace FTP_Download_SmartNet
 
             var fileList = TcFTPSite.GetFileList(client, host, hostEnd, startTime, endTime);
 
-            List<string> testBaseList = smartnet.GetBaseList(client, startTime);
+            // List<string> testBaseList = smartnet.GetBaseList(client, startTime);
 
             TcFTPSite.FTPDownload(client, host, hostEnd, fileList, Environment.CurrentDirectory);
+
+            foreach (var item in Environment.CurrentDirectory)
+            {
+                ZipFile.ExtractToDirectory(item.ToString(), Environment.CurrentDirectory);
+            }
+
 
         }
     }
