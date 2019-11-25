@@ -4,7 +4,7 @@ using System.IO.Compression;
 
 namespace FTP_Download_SmartNet
 {
-    class JobDownloads
+    class BaseJobName
     {
         public String JobName { get; set; }
         // list of BaseSpecs for multibase downloads
@@ -13,7 +13,7 @@ namespace FTP_Download_SmartNet
         public string LogFileString { get; set; }
 
         
-        public JobDownloads(string jobDirectory, List<BaseSpecs> baseSpecs)
+        public BaseJobName(string jobDirectory, List<BaseSpecs> baseSpecs)
         {
             JobDirectory = jobDirectory;
             BaseList = baseSpecs;
