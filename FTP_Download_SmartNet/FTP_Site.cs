@@ -143,47 +143,56 @@ namespace FTP_Download_SmartNet
         public static void FTPDownload(FtpClient client, string host, string hostEnd , List<String> fileList, string folderLocation)
         {
             int fileListCounter = 0;
+            int fileListCounter2 = 0;
 
             // loop over first list (List for first day)
             foreach (string item in client.GetNameListing(host))
             {
-                    
-                if (fileList[fileListCounter].Contains(item.GetFtpFileName()) && fileListCounter < (fileList.Count - 1))
+                if (fileListCounter < fileList.Count)
                 {
-                    Console.WriteLine("Downloading: " + item.GetFtpFileName());
-                    client.DownloadFile(folderLocation + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
-                    
-                    fileListCounter++;
 
+                    if (fileList[fileListCounter].Contains(item.GetFtpFileName()))
+                    {
+                        Console.WriteLine("Downloading: " + item.GetFtpFileName());
+                        client.DownloadFile(folderLocation + @"\" + item.GetFtpFileName(), host + @"\" + item.GetFtpFileName());
+
+                        fileListCounter++;
+
+                    }
                 }
                 
-
             }
 
             // loop over second list for second day
             foreach (string item2 in client.GetNameListing(hostEnd))
             {
-                    
-                if (fileList[fileListCounter].Contains(item2.GetFtpFileName()) && fileListCounter < (fileList.Count - 1))
+                if (fileListCounter < fileList.Count)
                 {
-                    Console.WriteLine("Downloading: " + item2.GetFtpFileName());
-                    client.DownloadFile(folderLocation + item2.GetFtpFileName(), hostEnd + @"\" + item2.GetFtpFileName());
 
-                    fileListCounter++;
+                    if (fileList[fileListCounter].Contains(item2.GetFtpFileName()))
+                    {
+                        Console.WriteLine("Downloading: " + item2.GetFtpFileName());
+                        client.DownloadFile(folderLocation + @"\" + item2.GetFtpFileName(), hostEnd + @"\" + item2.GetFtpFileName());
+
+                        fileListCounter++;
+
+                    }
 
                 }
 
             }
 
-            // wait for downloads to finish. Can be removed once async is implemented
-            //Thread.Sleep(10000);
+            // cant have 2 x same file name from the same base, even if it's on a different day
 
-            //foreach (var item in Directory.GetFiles(folderLocation).Where(x => x.ToString().EndsWith("zip")))
-            //{
-            //    ZipFile.ExtractToDirectory(item.ToString(), folderLocation);
-            //}
+            // wait for downloads to finish. Can probably be removed once async is implemented
+            Thread.Sleep(10000);
 
+            string[] filePaths = Directory.GetFiles(folderLocation, "*.zip");
 
+            foreach (var item in filePaths)
+            {
+                ZipFile.ExtractToDirectory(item.ToString(), folderLocation);
+            }
 
         }
 
