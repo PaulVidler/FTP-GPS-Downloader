@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Compression;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using FluentFTP;
 
 
@@ -135,7 +138,7 @@ namespace FTP_Download_SmartNet
 
 
 
-        // takes listof file names and downloads to specified location.
+        // takes list of file names and downloads to specified location.
         // *********** NEEDS TO BE MADE ASYNC!!!!!!! *****************
         public static void FTPDownload(FtpClient client, string host, string hostEnd , List<String> fileList, string folderLocation)
         {
@@ -171,6 +174,16 @@ namespace FTP_Download_SmartNet
                 }
 
             }
+
+            // wait for downloads to finish. Can be removed once async is implemented
+            //Thread.Sleep(10000);
+
+            //foreach (var item in Directory.GetFiles(folderLocation).Where(x => x.ToString().EndsWith("zip")))
+            //{
+            //    ZipFile.ExtractToDirectory(item.ToString(), folderLocation);
+            //}
+
+
 
         }
 

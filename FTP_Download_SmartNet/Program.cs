@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
+using System.Threading;
 
 namespace FTP_Download_SmartNet
 {
@@ -12,7 +14,7 @@ namespace FTP_Download_SmartNet
         {
             // year/month/day/hour/minute/second
             DateTime startTime = new DateTime(2019, 11, 8, 1, 0, 0);
-            DateTime endTime = new DateTime(2019, 11, 8, 3, 0, 0);
+            DateTime endTime = new DateTime(2019, 11, 8, 4, 0, 0);
             string baseName = "4CRY";
 
             BaseSpecs jobBase = new BaseSpecs(baseName, startTime, endTime);
@@ -35,11 +37,7 @@ namespace FTP_Download_SmartNet
 
             TcFTPSite.FTPDownload(client, host, hostEnd, fileList, Environment.CurrentDirectory);
 
-            foreach (var item in Environment.CurrentDirectory)
-            {
-                ZipFile.ExtractToDirectory(item.ToString(), Environment.CurrentDirectory);
-            }
-
+            
 
         }
     }
