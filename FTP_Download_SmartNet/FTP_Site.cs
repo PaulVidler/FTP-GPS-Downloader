@@ -204,7 +204,7 @@ namespace FTP_Download_SmartNet
 
             string JobName = "testJob";
 
-            string[] FileList = Directory.GetFiles(Environment.CurrentDirectory);
+            string[] FileList = Path.GetFileName(Environment.CurrentDirectory);
 
 
             foreach (var item in FileList.Where(x => x.EndsWith("g")))
