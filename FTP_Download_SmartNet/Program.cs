@@ -13,8 +13,8 @@ namespace FTP_Download_SmartNet
         static void Main(string[] args)
         {
             // year/month/day/hour/minute/second
-            DateTime startTime = new DateTime(2019, 11, 8, 10, 0, 0);
-            DateTime endTime = new DateTime(2019, 11, 9, 5, 0, 0);
+            DateTime startTime = new DateTime(2019, 11, 9, 10, 0, 0);
+            DateTime endTime = new DateTime(2019, 11, 9, 13, 0, 0);
             string baseName = "4CRY";
 
             BaseSpecs jobBase = new BaseSpecs(baseName, startTime, endTime);
@@ -37,7 +37,7 @@ namespace FTP_Download_SmartNet
 
             TcFTPSite.FTPDownload(client, host, hostEnd, fileList, Environment.CurrentDirectory);
 
-            
+            TcFTPSite.MergeRinexTEQCCall();
 
         }
     }

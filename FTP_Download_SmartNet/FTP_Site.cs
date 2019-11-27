@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using FluentFTP;
-
+using System.Diagnostics;
 
 namespace FTP_Download_SmartNet
 {
@@ -195,6 +195,45 @@ namespace FTP_Download_SmartNet
             }
 
         }
+
+        public static void MergeRinexTEQCCall()
+        {
+            string tecqCallG = "tecq";
+            string tecqCallN = "tecq";
+            string tecqCallO = "tecq";
+
+            string JobName = "testJob";
+
+            string[] FileList = Directory.GetFiles(Environment.CurrentDirectory);
+
+
+            foreach (var item in FileList.Where(x => x.EndsWith("g")))
+            {
+                tecqCallG = tecqCallG + " " + item;
+            }
+
+            tecqCallG = tecqCallG + " > " + JobName + ".19g";
+
+            foreach (var item in FileList.Where(x => x.EndsWith("n")))
+            {
+                tecqCallN = tecqCallN + " " + item;
+            }
+
+            tecqCallN = tecqCallN + " > " + JobName + ".19n";
+
+            foreach (var item in FileList.Where(x => x.EndsWith("o")))
+            {
+                tecqCallO = tecqCallO + " " + item;
+            }
+
+            tecqCallO = tecqCallO + " > " + JobName + ".19o";
+
+            Process.Start($"{tecqCallG}");
+            Process.Start($"{tecqCallN}");
+            Process.Start($"{tecqCallO}");
+
+        }
+
 
     }
 }
